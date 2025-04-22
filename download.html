@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./downloadvars.css">
+  <link rel="stylesheet" href="./downloadstyle.css">
+  
+  
+  <style>
+   a,
+   button,
+   input,
+   select,
+   h1,
+   h2,
+   h3,
+   h4,
+   h5,
+   * {
+       box-sizing: border-box;
+       margin: 0;
+       padding: 0;
+       border: none;
+       text-decoration: none;
+       background: none;
+   
+       -webkit-font-smoothing: antialiased;
+   }
+   
+   menu, ol, ul {
+       list-style-type: none;
+       margin: 0;
+       padding: 0;
+   }
+   </style>
+  <title>Document</title>
+</head>
+<body>
+  <div class="email-capture-modal">
+    <div class="blur"></div>
+    <img class="omada-target-logo" src="./assets/omadalogo.svg" />
+    <div class="omada-ai">Omada AI</div>
+    <div class="frame-1">
+      <div class="listbox">
+        <div class="label">
+          We&#039;ll email your custom assets and add you as a Founding Design
+          Partner.
+        </div>
+        <div class="form">
+          <div class="slot-container">
+            <div class="input">
+              <input type="email" class="backplate" placeholder="Enter your email address" />
+            </div>
+          </div>
+          <div class="label2">Limited to 20 Founding Partners this month.</div>
+        </div>
+      </div>
+      <div class="button">
+        <div class="text2">Send My Assets</div>
+      </div>
+    </div>
+    <div class="text3">
+      <div class="label-and-description"></div>
+    </div>
+    <div class="label3">Get Your Marketing Assets</div>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const button = document.querySelector('.button');
+      const input = document.querySelector('input[type="email"]');
+
+      // Get ID from URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get('id');
+
+      button.addEventListener('click', () => {
+        const email = input.value.trim();
+        const backplate = document.querySelector('.backplate');
+        
+        // Email validation regex
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        if (email && emailRegex.test(email)) {
+          // Remove error class if it exists
+          backplate.classList.remove('error');
+          
+          // Make the POST request and wait for response
+          fetch('https://yijxkt6gewyhgxuvlvz2p2tdu40mkzdp.lambda-url.us-west-1.on.aws/', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              email: email,
+              id: id
+            })
+          })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            // Redirect only after successful response
+            window.location.href = './thank.html';
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            // You might want to show an error message to the user here
+          });
+        } else {
+          // Add error class to trigger animation
+          backplate.classList.add('error');
+          
+          // Remove error class after animation completes
+          setTimeout(() => {
+            backplate.classList.remove('error');
+          }, 500);
+        }
+      });
+
+      // Also handle Enter key in the input field
+      input.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          button.click();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
