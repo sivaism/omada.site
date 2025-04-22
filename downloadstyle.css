@@ -208,7 +208,6 @@
   justify-content: center;
   flex-shrink: 0;
   position: relative;
-  margin-top: 0px;
   box-shadow: var(
     --box-shadow-shadow-inner-box-shadow,
     inset 0px 2px 0px 0px rgba(255, 255, 255, 0.15)
